@@ -9,16 +9,6 @@ pipeline{
                 git branch: 'main', credentialsId: '3e65bdf0-de0a-46e1-97f1-0537122e72ba', url: 'https://github.com/Manjula-g475/Petclinic-Real.git'
             }
         }
-        stage('mvn compile'){
-            steps{
-                sh 'mvn clean compile'
-            }
-        }
-        stage('mvn test'){
-            steps{
-                sh 'mvn test'
-            }
-        }
         stage('mvn build'){
             steps{
                 sh 'mvn clean install'

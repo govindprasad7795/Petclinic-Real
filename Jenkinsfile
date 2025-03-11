@@ -4,14 +4,10 @@ pipeline{
         maven 'maven1'
     }
     stages {
-        stage('Checkout From Git'){
-            steps{
-                git branch: 'main', credentialsId: '3e65bdf0-de0a-46e1-97f1-0537122e72ba', url: 'https://github.com/Manjula-g475/Petclinic-Real.git'
-            }
-        }
         stage('mvn build'){
             steps{
-                sh 'mvn clean install package'
+                sh 'mvn clean package'
+                sh 'mv target/*.war target/Petclinic-Real'
             }
         }  
         

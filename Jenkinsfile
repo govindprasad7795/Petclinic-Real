@@ -11,7 +11,8 @@ pipeline{
         }
         stage('Copy WAR File') {
             steps {
-                sh 'scp target/petclinic.war /home/ubuntu/apache-tomcat-9.0.100/webapps/'
+                sh 'scp -i /var/lib/jenkins/.ssh/ubuntu.pem target/petclinic.war ubuntu@3.110.124.133:/home/ubuntu/apache-tomcat-9.0.100/webapps/
+'
             }
         }
         stage("Deploy To Tomcat"){

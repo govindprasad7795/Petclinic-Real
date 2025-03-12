@@ -1,43 +1,21 @@
-
 pipeline {
     agent any
 
-    tools {
-        maven 'maven' // Make sure this matches what's configured in Jenkins > Global Tools
-    }
-
     environment {
-        REMOTE_USER = 'ubuntu'
         REMOTE_HOST = '3.110.124.133'
         REMOTE_PATH = '/home/ubuntu/apache-tomcat-9.0.100/webapps'
-        SSH_KEY = '/var/lib/jenkins/.ssh/tomcat-key.pem'
     }
 
     stages {
-        stage('Build WAR') {
+        stage('Deploy') {
             steps {
-                withEnv(["PATH+MAVEN=${tool 'maven-3.8.6'}/bin"]) {
-                    sh 'mvn clean package'
+                sshagent (credentials: ['tomcat-ssh-key']) {
+                    sh """
+                    scp -o StrictHostKeyChecking=no target/*.war ubuntu@${REMOTE_HOST}:${REMOTE_PATH}
+                    """
                 }
             }
         }
-
-        stage('Deploy WAR to Remote Tomcat') {
-            steps {
-                sh '''
-                    echo "Copying WAR file to remote server..."
-                    scp -i $SSH_KEY target/petclinic.war $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH/
-                '''
-            }
-        }
-    }
-
-    post {
-        success {
-            echo '✅ Deployment successful!'
-        }
-        failure {
-            echo '❌ Deployment failed!'
-        }
     }
 }
+

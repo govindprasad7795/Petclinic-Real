@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven'  // Make sure this matches the name in Global Tool Config
+        maven 'Maven-3.9.9'  // Make sure this matches the name in Global Tool Config
     }
 
     environment {

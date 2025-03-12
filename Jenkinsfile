@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     tools {
-        maven 'maven-3.8.6' // Make sure this matches the Maven version configured in Jenkins
+        maven 'maven-3.8.6' // Make sure this matches what's configured in Jenkins > Global Tools
     }
 
     environment {
         REMOTE_USER = 'ubuntu'
-        REMOTE_HOST = '3.110.124.133'              // Change this to your Tomcat server IP
+        REMOTE_HOST = '3.110.124.133'
         REMOTE_PATH = '/home/ubuntu/apache-tomcat-9.0.100/webapps'
-        SSH_KEY = '/var/lib/jenkins/.ssh/ubuntu.pem' // Update if your key has a different name/path
+        SSH_KEY = '/var/lib/jenkins/.ssh/tomcat-key.pem'
     }
 
     stages {
@@ -35,3 +35,4 @@ pipeline {
                 '''
             }
         }
+    }

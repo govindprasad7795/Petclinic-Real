@@ -9,18 +9,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building project with Maven...'
                 sh 'mvn clean package'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deploying WAR to ${REMOTE_HOST}..."
-
                 sshagent(['tomcat-ssh-key']) {
                     sh '''
-                        echo "Transferring WAR file to remote server..."
                         scp -o StrictHostKeyChecking=no target/*.war ubuntu@${REMOTE_HOST}:${REMOTE_PATH}
                     '''
                 }

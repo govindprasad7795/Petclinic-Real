@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven'  // Make sure this matches the name in Global Tool Config
+    }
+
     environment {
         REMOTE_HOST = '3.110.124.133'
         REMOTE_PATH = '/home/ubuntu/apache-tomcat-9.0.100/webapps'

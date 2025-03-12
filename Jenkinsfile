@@ -7,15 +7,33 @@ pipeline {
     }
 
     stages {
+        stage('Build') {
+            steps {
+                echo 'Building project with Maven...'
+                sh 'mvn clean package'
+            }
+        }
+
         stage('Deploy') {
             steps {
-                sshagent (credentials: ['tomcat-ssh-key']) {
-                    sh """
-                    scp -o StrictHostKeyChecking=no target/*.war ubuntu@${REMOTE_HOST}:${REMOTE_PATH}
-                    """
+                echo "Deploying WAR to ${REMOTE_HOST}..."
+
+                sshagent(['tomcat-ssh-key']) {
+                    sh '''
+                        echo "Transferring WAR file to remote server..."
+                        scp -o StrictHostKeyChecking=no target/*.war ubuntu@${REMOTE_HOST}:${REMOTE_PATH}
+                    '''
                 }
             }
         }
     }
-}
 
+    post {
+        success {
+            echo 'Build and deployment completed successfully.'
+        }
+        failure {
+            echo 'Something went wrong during build or deployment.'
+        }
+    }
+}

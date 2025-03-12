@@ -9,7 +9,7 @@ pipeline {
         REMOTE_USER = 'ubuntu'
         REMOTE_HOST = '3.110.124.133'              // Change this to your Tomcat server IP
         REMOTE_PATH = '/home/ubuntu/apache-tomcat-9.0.100/webapps'
-        SSH_KEY = '/var/lib/jenkins/.ssh/tomcat-key.pem' // Update if your key has a different name/path
+        SSH_KEY = '/var/lib/jenkins/.ssh/ubuntu.pem' // Update if your key has a different name/path
     }
 
     stages {

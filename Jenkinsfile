@@ -14,12 +14,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
-            steps {
-                git url: 'https://github.com/govindprasad7795/Petclinic-Real.git', branch: 'main'
-            }
-        }
-
         stage('Build WAR') {
             steps {
                 withEnv(["PATH+MAVEN=${tool 'maven-3.8.6'}/bin"]) {
